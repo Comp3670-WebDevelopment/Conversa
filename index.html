@@ -3,9 +3,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Conversa</title>
-	
+
 	<script type="text/javascript" src="index.js"></script>
-	
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 	<link rel="stylesheet" href="css/index.css" type="text/css">
 </head>
@@ -21,10 +21,31 @@
 			<!-- trending-topics.html would go inside here. Would get rid of top level element (#trending-topics) in that html file since we already have it here !-->
 		</article>
 		<article id="choose-your-topic" class="">
-		
+			<label>Start A Chat: </label>
+			<select name="Topic">
+			        <option>Choose a Chat Topic</option>
+			        <option>Politics</option>
+			        <option>Sports</option>
+			        <option>Economics</option>
+			        <option>Technology</option>
+			        <option>Relationship</option>
+			        <option>Friends</option>
+			        <option>School</option>
+			        <option>Weather</option>
+			        <option>Books</option>
+			        <option>Jobs</option>
+			        <option>Food</option>
+			        <option>Stress</option>
+			        <option>Pets</option>
+			        <option>Travel</option>
+			        <option>Music</option>
+			        <option>Business</option>
+			        <option>Cars</option>
+			      </select>
+			<button type="submit" id="find-conversation">Start Chatting!</button>
 		</article>
 		<article id="usage-stats" class="">
-		
+
 		</article>
 	</section>
 </body>

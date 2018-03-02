@@ -1,24 +1,29 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Conversa</title>
+	
 	<script type="text/javascript" src="index.js"></script>
-	<link rel="stylesheet" href="" type="text/css">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<link rel="stylesheet" href="css/index.css" type="text/css">
 </head>
 <body>
-	<nav id="main_bar">
-		<div>Chat Now</div>
-		<div>History</div>
-		<div>About Us</div>
-	</nav>
-	<section id="content">
-		<article id="trending-topics">
+	<div id="main-bar" class="row">
+		<div id="nav-app-name" class="col l3 m3 s12">Conversa</div>
+		<div id="nav-chat" class="col l3 m3 s12">Chat Now</div>
+		<div id="nav-history" class="col l3 m3 s12">History</div>
+		<div id="nav-about-us" class="col l3 m3 s12">About Us</div>
+	</div>
+	<section id="content" class="row">
+		<article id="trending-topics" class="">
+			<!-- trending-topics.html would go inside here. Would get rid of top level element (#trending-topics) in that html file since we already have it here !-->
+		</article>
+		<article id="choose-your-topic" class="">
 		
 		</article>
-		<article id="choose-your-topic">
-		
-		</article>
-		<article id="usage-stats">
+		<article id="usage-stats" class="">
 		
 		</article>
 	</section>

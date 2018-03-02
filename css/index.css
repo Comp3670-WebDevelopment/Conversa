@@ -1,0 +1,62 @@
+body {
+  font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+}
+body .row {
+  margin-bottom: 0px;
+}
+body #main-bar {
+  text-align: center;
+  border-bottom: 5px solid black;
+}
+body #main-bar #nav-app-name {
+  color: white;
+  background: black;
+}
+body #main-bar #nav-chat,
+body #main-bar #nav-history,
+body #main-bar #nav-about-us,
+body #main-bar #nav-app-name {
+  font-size: 24px;
+  padding: 20px 0px;
+  font-weight: bold;
+}
+body #main-bar #nav-chat:hover,
+body #main-bar #nav-history:hover,
+body #main-bar #nav-about-us:hover {
+  cursor: pointer;
+}
+body #main-bar #nav-chat {
+  text-decoration: underline;
+}
+body #trending-topics {
+  width: 300px;
+  height: 600px;
+  float: left;
+  margin: 15px 25px;
+  border: 1px solid black;
+}
+body #trending-topics #trending-topics-header {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px 15px;
+  text-align: center;
+  color: white;
+  background: black;
+  margin-left: -1px;
+}
+body #trending-topics .trending-topic-item {
+  border: 1px solid black;
+  padding: 5px 15px;
+  margin-left: -1px;
+}
+body #trending-topics .trending-topic-item .title {
+  font-size: 18px;
+  font-weight: bold;
+}
+body #trending-topics .trending-topic-item .conversations {
+  font-size: 14px;
+  text-indent: 25px;
+}
+body #trending-topics .trending-topic-item:hover {
+  cursor: pointer;
+}

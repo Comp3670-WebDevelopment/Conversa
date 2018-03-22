@@ -1,0 +1,197 @@
+body {
+  font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+}
+body .row {
+  margin-bottom: 0;
+}
+body #main-bar {
+  text-align: center;
+  border-bottom: 5px solid black;
+}
+body #main-bar #nav-app-name {
+  color: white;
+  background: black;
+}
+body #main-bar #nav-chat,
+body #main-bar #nav-history,
+body #main-bar #nav-about-us,
+body #main-bar #nav-app-name {
+  font-size: 24px;
+  padding: 20px 0;
+  font-weight: bold;
+}
+body #main-bar #nav-chat:hover,
+body #main-bar #nav-history:hover,
+body #main-bar #nav-about-us:hover {
+  cursor: pointer;
+}
+body #main-bar #nav-chat {
+  text-decoration: underline;
+}
+body #trending-topics {
+  width: 300px;
+  height: 600px;
+  margin: 15px 25px;
+  border: 1px solid black;
+  display: inline-block;
+}
+body #trending-topics #trending-topics-header {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px 15px;
+  text-align: center;
+  color: white;
+  background: black;
+  margin-left: -1px;
+}
+body #trending-topics .trending-topic-item {
+  border: 1px solid black;
+  padding: 5px 15px;
+  margin-left: -1px;
+}
+body #trending-topics .trending-topic-item .title {
+  font-size: 18px;
+  font-weight: bold;
+}
+body #trending-topics .trending-topic-item .conversations {
+  font-size: 14px;
+  text-indent: 25px;
+}
+body #trending-topics .trending-topic-item:hover {
+  cursor: pointer;
+}
+body #choose-your-topic {
+  width: 750px;
+  height: 600px;
+  margin: 15px 25px;
+  border: 1px solid black;
+  display: inline-block;
+  vertical-align: top;
+}
+body #choose-your-topic label {
+  width: 100%;
+  font-size: 36px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  margin: 100px 0;
+  display: block;
+}
+body #choose-your-topic select {
+  width: 75%;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  margin: auto;
+  display: block;
+}
+body #choose-your-topic button {
+  width: 40%;
+  height: 10%;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 50px auto;
+  display: block;
+  background-color: white;
+  color: black;
+}
+body #previous-conversations {
+  height: 350px;
+  margin: 15px 25px;
+  border: 1px solid black;
+  display: inline-block;
+  vertical-align: top;
+}
+body #previous-conversations #previous-conversations-header {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px 15px;
+  text-align: center;
+  color: white;
+  background: black;
+  margin-left: -1px;
+}
+body #previous-conversations #conversation-item {
+  border: 1px solid black;
+  padding: 5px 15px;
+  margin-left: -1px;
+}
+body #previous-conversations #conversation-date {
+  font-size: 14px;
+  font-weight: bold;
+}
+body #previous-conversations #conversation-messages {
+  font-size: 14px;
+  text-indent: 25px;
+}
+body #previous-topics {
+  height: 350px;
+  margin: 15px 25px;
+  border: 1px solid black;
+  display: inline-block;
+  vertical-align: top;
+}
+body #previous-topics #previous-topics-header {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px 15px;
+  text-align: center;
+  color: white;
+  background: black;
+  margin-left: -1px;
+}
+body #previous-topics #previous-topic-item {
+  border: 1px solid black;
+  padding: 5px 15px;
+  margin-left: -1px;
+}
+body #previous-topics #previous-topic-date {
+  font-size: 14px;
+  font-weight: bold;
+}
+body #previous-topics #previous-topic {
+  font-size: 14px;
+  text-indent: 25px;
+}
+body #about-us {
+  width: 1000px;
+  vertical-align: top;
+  display: inline-block;
+}
+body #about-us #mission-statement {
+  vertical-align: top;
+  display: block;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+body #about-us #statement {
+  font-size: 20px;
+  font-style: italic;
+}
+body #about-us #about-us {
+  vertical-align: top;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+}
+body #about-us #text {
+  vertical-align: top;
+  display: block;
+  font-size: 20px;
+  font-style: normal;
+}
+body #about-us #additional-info {
+  vertical-align: top;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+body #about-us #info {
+  vertical-align: top;
+  display: block;
+  font-size: 14px;
+  font-style: normal;
+}

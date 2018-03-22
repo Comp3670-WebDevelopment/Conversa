@@ -5,7 +5,7 @@ var conversationSchema = mongoose.Schema({
         mongoose.Schema.Types.ObjectId,
         mongoose.Schema.Types.ObjectId
     ],
-    topic: String
+    topic: mongoose.Schema.Types.ObjectId
 });
 
 var Conversation = mongoose.model("Conversation", conversationSchema);

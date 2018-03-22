@@ -50,6 +50,7 @@
             removeMiddleWidgets();
             addHistoryWidgetContainers();
             addHistoryWidgets();
+            addHistoryEvents();
         });
 
         $("#nav-about-us").on("click", function(e){
@@ -84,8 +85,13 @@
 
     function addHistoryWidgetContainers()
     {
-        $("#content").append($('<article id="trending-topics"></article>'));
+        var row = $("<div class='row'></div>")
+        row.append($("<article id='trending-topics' class='col l4 m4 s12'></article>"));
+        row.append($("<article id='previous-conversations' class='col l4 m4 s12'></article>"));
+        row.append($("<article id='previous-topics' class='col l4 m4 s12'></article>"));
+        $("#content").append(row);
     }
+
 
     function addAboutUsWidgetContainers()
     {
@@ -104,9 +110,12 @@
     function addHistoryWidgets()
     {
         addTrendingTopicsWidget();
-        /*$.get("/widgets/", function(data){
-            $("#").html(data);
-        });*/
+        $.get("/widgets/previous-conversations.html", function(data){
+            $("#previous-conversations").html(data);
+        });
+        $.get("/widgets/previous-topics.html", function(data){
+            $("#previous-topics").html(data);
+        });
     }
 
     function addAboutUsWidgets()
@@ -148,6 +157,14 @@
 
         });
 
+    }
+
+    function addHistoryEvents()
+    {
+      var url = '/get-conversations/user/' + localStorage.getItem('userId');
+      $.get(url, {}, function(result){
+
+      });
     }
 
 })();

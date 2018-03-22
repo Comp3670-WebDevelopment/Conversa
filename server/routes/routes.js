@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Conversation = require('../models/conversation.js');
 var Topic = require('../models/topic.js');
 var User = require('../models/user.js');
-var PendingConversation = require('../models/pending-conversation.js');
+//var PendingConversation = require('../models/pending-conversation.js');
 
 module.exports = function(app)
 {
@@ -109,4 +109,16 @@ module.exports = function(app)
 
     });
 
+    //Get all conversations based on userId
+    app.get('/get-conversations/user/:userId', function(req, res){
+      var userId = req.params.userId;
+
+      Conversation.find({
+        userId : userId
+      }).exec(function(err, conversations){
+        if (err) throw err;
+        res.json({"users_conversations": conversations});
+      });
+
+    });
 };

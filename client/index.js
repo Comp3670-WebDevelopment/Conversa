@@ -21,7 +21,7 @@
         else
         {
             var userId;
-            $.post("/", {}, function(result){
+            $.post("/create-user", {}, function(result){
                     userId = result._id;
                     localStorage.setItem("userId", userId);
                 }
@@ -129,6 +129,12 @@
     function addTrendingTopicsWidget()
     {
         $.get("/widgets/trending-topics.html", function(data){
+
+            //request all topics here
+            $.get("/get-topics", {}, function(result){
+
+            });
+
             $("#trending-topics").html(data);
         });
     }
@@ -151,7 +157,7 @@
                 // Get request to search for a conversation
                 // If found conversation, render messaging widget. Otherwise render no conversations found widget
                 $.get(url, {}, function(result){
-
+                    console.log(result);
                 });
             }
 

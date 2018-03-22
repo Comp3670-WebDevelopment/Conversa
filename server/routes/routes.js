@@ -4,11 +4,6 @@ var PendingConversation = require('../models/pending_conversation.js');
 var Conversation = require('../models/conversation.js');
 var Message = require('../models/message.js');
 var Topic = require('../models/topic.js');
-<<<<<<< HEAD
-var User = require('../models/user.js');
-//var PendingConversation = require('../models/pending-conversation.js');
-=======
->>>>>>> 54a89e51692627305c276692ad8efad49c6cc6b4
 
 module.exports = function(app)
 {
@@ -114,8 +109,13 @@ module.exports = function(app)
         createMessage(res, conversationId, userId, messageText);
     });
 
-    // Get list of conversations for this user
-    app.get('/history/user/:userId', function(req, res){
+    // About Us page
+    app.get('/about-us', function(req, res){
+
+    });
+
+    //Get all conversations based on userId
+    app.get('/get-conversations/user/:userId', function(req, res){
         var userId = req.params.userId;
 
         Conversation.find({
@@ -124,29 +124,7 @@ module.exports = function(app)
             if (err) throw err;
             res.json({"users_conversations": conversations});
         });
-
     });
-
-    // About Us page
-    app.get('/about-us', function(req, res){
-
-    });
-
-<<<<<<< HEAD
-    //Get all conversations based on userId
-    app.get('/get-conversations/user/:userId', function(req, res){
-      var userId = req.params.userId;
-
-      Conversation.find({
-        userId : userId
-      }).exec(function(err, conversations){
-        if (err) throw err;
-        res.json({"users_conversations": conversations});
-      });
-
-    });
-};
-=======
     function createUser(res)
     {
         var user = new User();
@@ -235,4 +213,3 @@ module.exports = function(app)
         }
     }
 };
->>>>>>> 54a89e51692627305c276692ad8efad49c6cc6b4

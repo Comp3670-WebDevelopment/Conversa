@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
 
 var messageSchema = mongoose.Schema({
-    conversationId: mongoose.Schema.Types.ObjectId,
-    author: mongoose.Schema.Types.ObjectId,
+    conversationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Conversation' },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     text: String,
     createdAt: {
         type: Date,

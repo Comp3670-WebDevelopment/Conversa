@@ -23,7 +23,7 @@ module.exports = function(app)
 
     // Create topic
     app.post('/create-topics', function(req, res){
-        createTopic(res,"");
+        createTopic(res, "");
     });
 
     // Home page
@@ -44,33 +44,42 @@ module.exports = function(app)
         var userId = req.params.userId;
         var topicName = req.params.topicName;
 
-        PendingConversation.find().sort({date: 'ascending'}).exec(function(err, pendingConversations){
+        Topic.find({
+            name: topicName
+        }).exec(function(err, topic){
+            if (err) throw err;
+            else {
+                topic = topic[0];
 
-            if(pendingConversations.length == 0)
-            {
-                createPendingConversation(res, userId, topicName);
-            }
-            else
-            {
-                for(var i = 0; i < pendingConversations.length; i++)
-                {
-                    // Found two people looking for conversation about same topic
-                    if(pendingConversations[i].topic == topicName)
+                PendingConversation.find().populate('topic').sort({date: 'ascending'}).exec(function(err, pendingConversations){
+
+                    if(pendingConversations.length == 0)
                     {
-                        removePendingConversation(pendingConversations[i]._id);
-                        createConversation(res, userId, pendingConversations[i].userId, topicName);
+                        createPendingConversation(res, userId, topic);
+                    }
+                    else
+                    {
+                        for(var i = 0; i < pendingConversations.length; i++)
+                        {
+                            // Found two people looking for conversation about same topic
+                            if(pendingConversations[i].topic.id == topic.id)
+                            {
+                                removePendingConversation(pendingConversations[i].id);
+                                createConversation(res, userId, pendingConversations[i].userId, topic);
 
-                        break;
+                                break;
+                            }
+
+                            // True when no pending conversation has same topic
+                            if(i == (pendingConversations.length - 1))
+                            {
+                                createPendingConversation(res, userId, topic);
+                            }
+                        }
                     }
 
-                    // True when no pending conversation has same topic
-                    if(i == pendingConversations.length - 1)
-                    {
-                        createPendingConversation(res, userId, topicName);
-                    }
-                }
+                });
             }
-
         });
 
     });
@@ -141,10 +150,10 @@ module.exports = function(app)
                 userId1,
                 userId2
             ],
-            topic: topic
+            topic: topic.id
         });
 
-        conversation.save(function(err){
+        conversation.save(function(err, data){
             logErrors(res, err, data, "conversation")
         });
     }
@@ -152,7 +161,7 @@ module.exports = function(app)
     function createPendingConversation(res, userId, topic)
     {
         var pendingConversation = new PendingConversation({
-            topic: topic,
+            topic: topic.id,
             userId: userId
         });
 
@@ -194,8 +203,9 @@ module.exports = function(app)
 
     function removePendingConversation(id)
     {
-        PendingConversation.find({_id: id}).remove(function(err){
-            if(err) throw err;
+        PendingConversation.remove({_id: id}).exec(function(err, result){
+            if (err) throw err;
+            console.log("Removed pending conversation.");
         });
     }
 
@@ -209,7 +219,7 @@ module.exports = function(app)
         else
         {
             console.log("Created a " + model + ".");
-            res.send(data);
+            res.json({"created_document" : data});
         }
     }
 };

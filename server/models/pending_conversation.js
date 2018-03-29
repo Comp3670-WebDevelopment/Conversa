@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
 
 var pendingConversationSchema = mongoose.Schema({
-    topic: mongoose.Schema.Types.ObjectId,
-    userId: mongoose.Schema.Types.ObjectId,
+    topic: { type: mongoose.Schema.Types.ObjectId, ref: 'Topic' },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdAt: {
         type: Date,
         default: Date.now

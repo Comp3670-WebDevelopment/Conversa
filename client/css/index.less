@@ -40,11 +40,11 @@ body
 	{
 	    #trending-topics
         {
-            width: 300px;
             height: 600px;
-            margin: 15px 25px;
-            border: 1px solid black;
+            margin: 50px 0;
             display: inline-block;
+            box-sizing: border-box;
+            padding: 0 50px;
 
             #trending-topics-header
             {
@@ -83,11 +83,9 @@ body
 
         #choose-your-topic
         {
-            width: 750px;
-            height: 600px;
-            margin: 15px 25px;
-            border: 1px solid black;
-            display: inline-block;
+            width: 100%;
+            margin: 50px 0;
+            display: block;
             vertical-align: top;
 
             label
@@ -128,13 +126,13 @@ body
 
         #previous-conversations
         {
-            height: 350px;
-            margin: 15px 25px;
-            border: 1px solid black;
+            height: 600px;
+            margin: 50px 0;
             display: inline-block;
-            vertical-align: top;
+            box-sizing: border-box;
+            padding: 0 50px;
 
-            .previous-conversations-header
+            #previous-conversations-header
             {
                 font-size: 20px;
                 font-weight: bold;
@@ -167,13 +165,14 @@ body
 
         #previous-topics
         {
-            height: 350px;
-            margin: 15px 25px;
-            border: 1px solid black;
+            height: 600px;
+            margin: 50px 0;
             display:inline-block;
-            vertical-align: top;
+            box-sizing: border-box;
+            padding: 0 50px;
 
-            .previous-topics-header
+
+            #previous-topics-header
             {
                 font-size: 20px;
                 font-weight: bold;
@@ -250,6 +249,19 @@ body
                 display: block;
                 font-size: 14px;
                 font-style: normal;
+            }
+        }
+
+        #usage-stats
+        {
+            width: 100%;
+            display: block;
+
+            #chartContainer
+            {
+                height: 370px;
+                max-width: 920px;
+                margin: 0 auto;
             }
         }
 	}

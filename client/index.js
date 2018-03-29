@@ -2,6 +2,7 @@
 
     $(document).ready(function(){
 
+        //localStorage.setItem("userId", "");
         checkUserId();
         setTabClickEvents();
         // Renders Home Screen
@@ -23,7 +24,7 @@
         {
             var userId;
             $.post("/create-user", {}, function(result){
-                    userId = result._id;
+                    userId = result["created_document"]._id;
                     localStorage.setItem("userId", userId);
                 }
             );
@@ -127,10 +128,11 @@
             $("#previous-topics").html(data);
         });
 
-        // Make http requests and Populate widgets
+        // Populate widgets
         var url = '/get-conversations/user/' + localStorage.getItem('userId');
-        $.get(url, {}, function(result){
-
+        $.get(url, {}, function(results){
+            console.log(results);
+            // Append conversation items here
         });
     }
 
@@ -157,7 +159,7 @@
 
     function addChatNowEvents()
     {
-        $("#content").on('click', '#find-conversation', function(e){
+        $("#content").one('click', '#find-conversation', function(e){
 
             if($("#topic-selector").find(":selected:enabled").length == 0)
             {
@@ -180,16 +182,79 @@
                     if(userIds)
                     {
                         // Launch conversation screen
+                        removeMiddleWidgets();
+                        showConversationScreen(result["created_document"]._id);
                     }
                     else
                     {
                         // Launch waiting for another user screen
+                        console.log("Pending conversation.");
                     }
                 });
             }
 
         });
 
+    }
+
+    function showConversationScreen(conversationId)
+    {
+        var row = $("<div class='row'></div>");
+        row.append($("<article id='trending-topics' class='col l3 m3 s12'></article>"));
+        row.append($("<article id='conversation-screen' class='col l9 m9 s12'></article>"));
+
+        addTrendingTopicsWidget();
+        $.get("/widgets/conversation.html", function(data){
+            $("#conversation-screen").html(data);
+        });
+
+        var url = "/chat-now/user/" + localStorage.getItem("userId") + "/conversation/" + conversationId;
+
+        $.get(url, {}, function(results){
+
+            console.log("Results when showing conversation screen: " + results);
+
+            if(results.length > 0)
+            {
+                var messageCont  = $("#message-cont");
+
+                for(var i = 0; i < results.length; i++)
+                {
+                    var newMessage = $("<div class='message'>" + results["messages"][i].text + "</div>");
+                    if(results["messages"][i].author == localStorage.getItem("userId"))
+                    {
+                        newMessage.css("float", "right");
+                    }
+                    messageCont.append(newMessage);
+                }
+            }
+
+        });
+
+        $("#content").append(row);
+
+        addConversationEvents(conversationId);
+
+    }
+
+    function addConversationEvents(conversationId)
+    {
+        $("#send-button").ready(function(){
+
+            $("#send-button").on("click", function(e) {
+                var messageToSend = $("#message-to-send").val();
+                var url = "/chat-now/user/" + localStorage.getItem("userId") + "/conversation/" + conversationId +
+                    "/message/" + messageToSend;
+
+                $.post(url, {}, function(results){
+
+                    console.log(results);
+
+                });
+
+            });
+
+        });
     }
 	
 	function createChart()

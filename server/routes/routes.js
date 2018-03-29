@@ -7,35 +7,17 @@ var Topic = require('../models/topic.js');
 
 module.exports = function(app)
 {
-    // Get trending topics for frontend widget
-    /*app.get('*', function(req, res){
-
-        Conversation.find().exec(function(err, conversations){
-            if (err) throw err;
-
-            var trendingTopics = [10];
-            //Process conversations to return number of conversations for top 10 topics
-            res.send("");
-            //res.json({"trending_topics": trendingTopics});
-        });
-
-    });*/
+    // Home page
+    app.get('/', function(req, res){});
 
     // Create topic
     app.post('/create-topics', function(req, res){
         createTopic(res, "");
     });
 
-    // Home page
-    app.get('/', function(req, res){
-
-    });
-
     // Create a user
     app.post('/create-user', function(req, res){
-
         createUser(res);
-
     });
 
     // Search for conversation
@@ -87,14 +69,9 @@ module.exports = function(app)
     // Get all topics, *users logged in data for graph*
     app.get('/get-topics', function(req, res){
         // Get top five topics based on num of conversations with that topic
-        Conversation.find().exec(function(err, conversations){
-
+        Conversation.find().exec(function(err, topics){
+            res.json({"all_topics" : topics});
         });
-    });
-
-    // Create a pending conversation
-    app.post('/chat-now', function(req, res){
-
     });
 
     // Get all messages in conversation
@@ -118,22 +95,18 @@ module.exports = function(app)
         createMessage(res, conversationId, userId, messageText);
     });
 
-    // About Us page
-    app.get('/about-us', function(req, res){
-
-    });
-
     //Get all conversations based on userId
     app.get('/get-conversations/user/:userId', function(req, res){
         var userId = req.params.userId;
 
         Conversation.find({
-            userId: userId
+            userIds: userId
         }).exec(function(err, conversations){
             if (err) throw err;
             res.json({"users_conversations": conversations});
         });
     });
+
     function createUser(res)
     {
         var user = new User();
@@ -190,14 +163,7 @@ module.exports = function(app)
         });
 
         topic.save(function(err, data){
-            if(err)
-            {
-                console.log(err);
-            }
-            else
-            {
-                console.log("Created a topic.");
-            }
+            logErrors(res, err, data, "topic")
         });
     }
 

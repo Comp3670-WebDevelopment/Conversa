@@ -202,3 +202,73 @@ body #content #usage-stats #chartContainer {
   max-width: 920px;
   margin: 0 auto;
 }
+body #content #conversation-screen {
+  height: 75%;
+  margin: 50px 0;
+  position: relative;
+  padding: 0 50px;
+}
+body #content #conversation-screen #conversation-title {
+  width: 100%;
+  display: block;
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  background: black;
+  color: white;
+  height: 45px;
+}
+body #content #conversation-screen #message-cont {
+  display: block;
+  width: 100%;
+  padding: 25px;
+  border: 1px solid black;
+  height: calc(100% - 90px);
+}
+body #content #conversation-screen #message-cont .message {
+  display: block;
+  max-width: 300px;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border-radius: 25px;
+  background: black;
+  clear: both;
+  font-weight: bold;
+  color: white;
+  font-size: 16px;
+}
+body #content #conversation-screen #action-cont {
+  display: block;
+  height: 45px;
+  background: black;
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 100px);
+}
+body #content #conversation-screen #action-cont #input-cont {
+  display: inline-block;
+  padding: 0;
+}
+body #content #conversation-screen #action-cont #input-cont input {
+  background: white;
+  border-radius: 25px;
+  margin: 5px 25px;
+  height: 35px;
+  text-indent: 25px;
+  width: calc(100% - 50px);
+  font-size: 16px;
+  font-weight: bold;
+}
+body #content #conversation-screen #action-cont #send-cont {
+  padding: 0;
+}
+body #content #conversation-screen #action-cont #send-cont #send-button {
+  display: block;
+  text-align: center;
+  height: 35px;
+  margin: 5px 25px 5px 0;
+  background: white;
+  border-radius: 25px;
+  font-weight: bold;
+  width: calc(100% - 25px);
+}

@@ -264,5 +264,93 @@ body
                 margin: 0 auto;
             }
         }
+
+        #conversation-screen
+        {
+            height: 75%;
+            margin: 50px 0;
+            position: relative;
+            padding: 0 50px;
+
+            #conversation-title
+            {
+                width: 100%;
+                display: block;
+                font-size: 26px;
+                font-weight: bold;
+                text-align: center;
+                background: black;
+                color: white;
+                height: 45px;
+            }
+
+            #message-cont
+            {
+                display: block;
+                width: 100%;
+                padding: 25px;
+                border: 1px solid black;
+                height: ~"calc(100% - 90px)";
+
+                .message
+                {
+                    display: block;
+                    max-width: 300px;
+                    padding: 10px 15px;
+                    margin: 5px 0;
+                    border-radius: 25px;
+                    background: black;
+                    clear: both;
+                    font-weight: bold;
+                    color: white;
+                    font-size: 16px;
+                }
+
+            }
+            #action-cont
+            {
+                display: block;
+                height: 45px;
+                background: black;
+                position: absolute;
+                bottom: 0;
+                width: ~"calc(100% - 100px)";
+
+                #input-cont
+                {
+                    display: inline-block;
+                    padding: 0;
+
+                    input
+                    {
+                        background: white;
+                        border-radius: 25px;
+                        margin: 5px 25px;
+                        height: 35px;
+                        text-indent: 25px;
+                        width: ~"calc(100% - 50px)";
+                        font-size: 16px;
+                        font-weight: bold;
+                    }
+                }
+
+                #send-cont
+                {
+                    padding: 0;
+
+                    #send-button
+                    {
+                        display: block;
+                        text-align: center;
+                        height: 35px;
+                        margin: 5px 25px 5px 0;
+                        background: white;
+                        border-radius: 25px;
+                        font-weight: bold;
+                        width: ~"calc(100% - 25px)";
+                    }
+                }
+            }
+        }
 	}
 }

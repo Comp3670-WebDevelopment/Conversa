@@ -38,9 +38,13 @@ body
 
 	#content
 	{
+        .left #trending-topics
+        {
+            width: 85%;
+        }
+
 	    #trending-topics
         {
-            height: 600px;
             margin: 50px 0;
             display: inline-block;
             box-sizing: border-box;
@@ -126,7 +130,6 @@ body
 
         #previous-conversations
         {
-            height: 600px;
             margin: 50px 0;
             display: inline-block;
             box-sizing: border-box;
@@ -165,7 +168,6 @@ body
 
         #previous-topics
         {
-            height: 600px;
             margin: 50px 0;
             display:inline-block;
             box-sizing: border-box;
@@ -282,6 +284,46 @@ body
                 background: black;
                 color: white;
                 height: 45px;
+                line-height: 45px;
+
+            }
+
+            #back-to-main
+            {
+                position: absolute;
+                top: 5px;
+                left: 75px;
+                height: 35px;
+                width: 10px;
+                font-weight: bold;
+                font-size: 18px;
+                color: white;
+
+                img
+                {
+                    height: 35px;
+                    width: 35px;
+                }
+                img:hover
+                {
+                    cursor: pointer;
+                }
+            }
+
+            #leave-conversation
+            {
+                position: absolute;
+                top: 5px;
+                right: 75px;
+                height: 35px;
+                font-weight: bold;
+                font-size: 18px;
+                color: white;
+                background: red;
+                border-radius: 25px;
+                padding: 0 20px;
+                cursor: pointer;
+                line-height: 35px;
             }
 
             #message-cont
@@ -348,6 +390,11 @@ body
                         border-radius: 25px;
                         font-weight: bold;
                         width: ~"calc(100% - 25px)";
+                        line-height: 35px;
+                    }
+                    #send-button:hover
+                    {
+                        cursor: pointer;
                     }
                 }
             }

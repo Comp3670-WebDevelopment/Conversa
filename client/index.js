@@ -5,8 +5,7 @@
         //localStorage.setItem("userId", "");
         checkUserId();
         setTabClickEvents();
-        // Renders Home Screen
-        $("#nav-chat").trigger("click");
+        showHomeScreen();
 
     });
 
@@ -73,16 +72,22 @@
         $("#nav-about-us").css("text-decoration", "initial");
     }
 
+    function showHomeScreen()
+    {
+        $("#nav-chat").trigger("click");
+    }
+
     function removeMiddleWidgets()
     {
+        $("#content").unbind();
         $("#content").empty();
     }
 
     function addChatNowWidgetContainers()
     {
         var row = $("<div class='row'></div>");
-        var left = $("<div class='col l3 m3 s12'></div>");
-        var right = $("<div class='col l9 m9 s12'></div>");
+        var left = $("<div class='left col l4 m4 s12'></div>");
+        var right = $("<div class='right col l8 m8 s12'></div>");
         left.append($('<article id="trending-topics"></article>'));
         right.append($('<article id="choose-your-topic"></article>'));
         right.append($('<article id="usage-stats"></article>'));
@@ -111,10 +116,24 @@
         addTrendingTopicsWidget();
         $.get("/widgets/topic-chooser.html", function(data){
             $("#choose-your-topic").html(data);
+            populateTopicChooserWidget();
         });
         $.get("/widgets/usage-stats.html", function(data){
             $("#usage-stats").html(data);
             createChart();
+        });
+    }
+
+    function populateTopicChooserWidget()
+    {
+        $.get("/get-topics", {}, function(results){
+
+            for(var i = 0; i < results["all_topics"].length; i++)
+            {
+                var selectElem = $("#topic-selector");
+                selectElem.append("<option>" + results["all_topics"][i].name + "</option>")
+            }
+
         });
     }
 
@@ -123,16 +142,65 @@
         addTrendingTopicsWidget();
         $.get("/widgets/previous-conversations.html", function(data){
             $("#previous-conversations").html(data);
+            populatePreviousConversationsWidget();
         });
         $.get("/widgets/previous-topics.html", function(data){
             $("#previous-topics").html(data);
+            populatePreviousTopicsWidget();
         });
+    }
 
-        // Populate widgets
+    function populatePreviousConversationsWidget()
+    {
         var url = '/get-conversations/user/' + localStorage.getItem('userId');
         $.get(url, {}, function(results){
-            console.log(results);
-            // Append conversation items here
+
+            for(var i = 0; i < results["users_conversations"].length; i++)
+            {
+                var conversationId = results["users_conversations"][i]._id;
+                var conversationItemElem = $("<div class='conversation-item' data-conversationid='" + conversationId + "'></div>");
+                var conversationDateElem = $("<div class='conversation-date'>Conversation On 3/3/18</div>");
+                var conversationMessageCountElem = $("<div class='conversation-messages'>13 Messages</div>");
+
+                $("#conversation-item-holder").append(conversationItemElem);
+                conversationItemElem.append(conversationDateElem);
+                conversationItemElem.append(conversationMessageCountElem);
+            }
+
+            addPreviousConversationWidgetEvents();
+        });
+    }
+
+    function addPreviousConversationWidgetEvents()
+    {
+        $(".conversation-item").one("click", function(e){
+
+            var conversationId = this.dataset.conversationid;
+            removeMiddleWidgets();
+            showConversationScreen(conversationId);
+
+        });
+    }
+
+    function populatePreviousTopicsWidget()
+    {
+        var url = "/get-previous-topics/user/" + localStorage.getItem("userId");
+        $.get(url, {}, function(results){
+
+            for(var i = 0; i < results["previous_topics"].length; i++)
+            {
+                var topic = results["previous_topics"][i].topic.name;
+
+                // Create topic items and append here
+                var topicItemElem = $("<div class='previous-topic-item'></div>");
+                var topicConversationDateElem = $("<div class='previous-topic-date'>Started Conversation on 1/1/18</div>");
+                var topicNameElem = $("<div class='previous-topic'>" + topic + "</div>");
+
+                $("#topic-item-holder").append(topicItemElem);
+                topicItemElem.append(topicConversationDateElem);
+                topicItemElem.append(topicNameElem)
+            }
+
         });
     }
 
@@ -147,13 +215,25 @@
     function addTrendingTopicsWidget()
     {
         $.get("/widgets/trending-topics.html", function(data){
-
-            //request all topics here
-            $.get("/get-topics", {}, function(result){
-
-            });
-
             $("#trending-topics").html(data);
+            populateTrendingTopicsWidget();
+        });
+    }
+
+    function populateTrendingTopicsWidget()
+    {
+        $.get("/get-trending-topics", {}, function(results){
+
+            for(var i = 0; i < results["trending_topics"].length; i++)
+            {
+                var trendingTopicElem = $("<div class='trending-topic-item'></div>");
+                var trendingTopicTitle = $("<div class='title'>" + results["trending_topics"][i][0] + "</div>");
+                var trendingTopicConversations = $("<div class='conversations'>" + results["trending_topics"][i][1] + " Conversations</div>")
+
+                $("#trending-topic-item-holder").append(trendingTopicElem);
+                trendingTopicElem.append(trendingTopicTitle);
+                trendingTopicElem.append(trendingTopicConversations);
+            }
         });
     }
 
@@ -202,23 +282,33 @@
         var row = $("<div class='row'></div>");
         row.append($("<article id='trending-topics' class='col l3 m3 s12'></article>"));
         row.append($("<article id='conversation-screen' class='col l9 m9 s12'></article>"));
+        $("#content").append(row);
 
         addTrendingTopicsWidget();
         $.get("/widgets/conversation.html", function(data){
             $("#conversation-screen").html(data);
+            populateConversationScreen(conversationId);
+            addConversationEvents(conversationId);
         });
+    }
 
+    function populateConversationScreen(conversationId)
+    {
         var url = "/chat-now/user/" + localStorage.getItem("userId") + "/conversation/" + conversationId;
+
+        $.get("/chat-now/conversation/" + conversationId, {}, function(result){
+
+            $($("#conversation-title")[0]).text(result["conversation"][0].topic.name);
+
+        });
 
         $.get(url, {}, function(results){
 
-            console.log("Results when showing conversation screen: " + results);
-
-            if(results.length > 0)
+            if(results["messages"].length > 0)
             {
-                var messageCont  = $("#message-cont");
+                var messageCont = $("#message-cont");
 
-                for(var i = 0; i < results.length; i++)
+                for(var i = 0; i < results["messages"].length; i++)
                 {
                     var newMessage = $("<div class='message'>" + results["messages"][i].text + "</div>");
                     if(results["messages"][i].author == localStorage.getItem("userId"))
@@ -230,11 +320,6 @@
             }
 
         });
-
-        $("#content").append(row);
-
-        addConversationEvents(conversationId);
-
     }
 
     function addConversationEvents(conversationId)
@@ -246,14 +331,28 @@
                 var url = "/chat-now/user/" + localStorage.getItem("userId") + "/conversation/" + conversationId +
                     "/message/" + messageToSend;
 
-                $.post(url, {}, function(results){
+                $.post(url, {}, function(results){});
 
-                    console.log(results);
-
-                });
+                $("#message-to-send").val("");
+                var messageCont = $("#message-cont");
+                var newMessage = $("<div class='message'>" + messageToSend + "</div>");
+                newMessage.css("float", "right");
+                messageCont.append(newMessage);
 
             });
 
+        });
+
+        $("#leave-conversation").on("click", function(e){
+
+            $.post("/chat-now/remove-conversation/conversation/" + conversationId, {}, function(results){
+                showHomeScreen();
+            });
+
+        });
+
+        $("#back-to-main").one("click", function(e){
+            showHomeScreen();
         });
     }
 	

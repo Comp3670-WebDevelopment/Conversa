@@ -28,8 +28,10 @@ body #main-bar #nav-about-us:hover {
 body #main-bar #nav-chat {
   text-decoration: underline;
 }
+body #content .left #trending-topics {
+  width: 85%;
+}
 body #content #trending-topics {
-  height: 600px;
   margin: 50px 0;
   display: inline-block;
   box-sizing: border-box;
@@ -96,7 +98,6 @@ body #content #choose-your-topic button {
   color: black;
 }
 body #content #previous-conversations {
-  height: 600px;
   margin: 50px 0;
   display: inline-block;
   box-sizing: border-box;
@@ -125,7 +126,6 @@ body #content #previous-conversations .conversation-messages {
   text-indent: 25px;
 }
 body #content #previous-topics {
-  height: 600px;
   margin: 50px 0;
   display: inline-block;
   box-sizing: border-box;
@@ -217,6 +217,38 @@ body #content #conversation-screen #conversation-title {
   background: black;
   color: white;
   height: 45px;
+  line-height: 45px;
+}
+body #content #conversation-screen #back-to-main {
+  position: absolute;
+  top: 5px;
+  left: 75px;
+  height: 35px;
+  width: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+}
+body #content #conversation-screen #back-to-main img {
+  height: 35px;
+  width: 35px;
+}
+body #content #conversation-screen #back-to-main img:hover {
+  cursor: pointer;
+}
+body #content #conversation-screen #leave-conversation {
+  position: absolute;
+  top: 5px;
+  right: 75px;
+  height: 35px;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  background: red;
+  border-radius: 25px;
+  padding: 0 20px;
+  cursor: pointer;
+  line-height: 35px;
 }
 body #content #conversation-screen #message-cont {
   display: block;
@@ -271,4 +303,8 @@ body #content #conversation-screen #action-cont #send-cont #send-button {
   border-radius: 25px;
   font-weight: bold;
   width: calc(100% - 25px);
+  line-height: 35px;
+}
+body #content #conversation-screen #action-cont #send-cont #send-button:hover {
+  cursor: pointer;
 }

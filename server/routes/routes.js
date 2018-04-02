@@ -66,10 +66,49 @@ module.exports = function(app)
 
     });
 
-    // Get all topics, *users logged in data for graph*
+    // Get top 5 trending topics
+    app.get('/get-trending-topics', function(req, res){
+
+        Conversation.find().populate('topic').exec(function(err, conversations){
+
+            var topicCounter = {};
+
+            // Tally occurrence of each topic in an array
+            for(var i = 0; i < conversations.length; i++)
+            {
+                var topic = conversations[i].topic.name;
+                topicCounter[topic] = (topicCounter[topic] || 0) + 1
+            }
+
+            // Sort array by topics with most conversations. Only return 5
+            var topicArr = [];
+            for(var topicName in topicCounter)
+            {
+                topicArr.push([topicName, topicCounter[topicName]]);
+            }
+            topicArr.sort(function(a, b){
+                return b[1] - a[1];
+            });
+            topicArr = topicArr.slice(0, 4);
+
+            res.json({"trending_topics" : topicArr});
+        });
+    });
+
+    // Get 5 previous topics
+    app.get('/get-previous-topics/user/:userId', function(req, res){
+        var userId = req.params.userId;
+
+        Conversation.find({
+            userIds: userId
+        }).populate('topic').sort({created_at: "descending"}).limit(5).exec(function(err, topics){
+            res.json({"previous_topics" : topics});
+        });
+    });
+
+    // Get all topics
     app.get('/get-topics', function(req, res){
-        // Get top five topics based on num of conversations with that topic
-        Conversation.find().exec(function(err, topics){
+        Topic.find().sort({name: 'ascending'}).exec(function(err, topics){
             res.json({"all_topics" : topics});
         });
     });
@@ -83,6 +122,17 @@ module.exports = function(app)
         }).exec(function(err, messages){
             if (err) throw err;
             res.json({"messages": messages})
+        })
+    });
+
+    app.get('/chat-now/conversation/:conversationId', function(req, res){
+        var conversationId = req.params.conversationId;
+
+        Conversation.find({
+            _id: conversationId
+        }).populate('topic').exec(function(err, conversation){
+            if(err) throw err;
+            res.json({"conversation": conversation})
         })
     });
 
@@ -101,10 +151,20 @@ module.exports = function(app)
 
         Conversation.find({
             userIds: userId
-        }).exec(function(err, conversations){
+        }).sort({createdAt: "descending"}).exec(function(err, conversations){
             if (err) throw err;
             res.json({"users_conversations": conversations});
         });
+    });
+
+    app.post('/chat-now/remove-conversation/conversation/:conversationId', function(req, res){
+        var conversationId = req.params.conversationId;
+
+        removeConversation(conversationId);
+        removeMessages(conversationId);
+
+        res.json({"result": "Finished removing conversation and messages."})
+
     });
 
     function createUser(res)
@@ -173,6 +233,22 @@ module.exports = function(app)
             if (err) throw err;
             console.log("Removed pending conversation.");
         });
+    }
+
+    function removeConversation(id)
+    {
+        Conversation.remove({_id: id}).exec(function(err, result){
+            if (err) throw err;
+            console.log("Removed conversation.");
+        });
+    }
+
+    function removeMessages(conversationId)
+    {
+        Message.remove({conversationId: conversationId}).exec(function(err, result){
+            if (err) throw err;
+            console.log("Removed messages.");
+        })
     }
 
     function logErrors(res, err, data, model)

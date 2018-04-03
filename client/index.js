@@ -1,5 +1,7 @@
 (function(){
 
+    var month = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
     $(document).ready(function(){
 
         //localStorage.setItem("userId", "");
@@ -159,8 +161,15 @@
             {
                 var conversationId = results["users_conversations"][i]._id;
                 var conversationItemElem = $("<div class='conversation-item' data-conversationid='" + conversationId + "'></div>");
-                var conversationDateElem = $("<div class='conversation-date'>Conversation On 3/3/18</div>");
-                var conversationMessageCountElem = $("<div class='conversation-messages'>13 Messages</div>");
+
+                var timestamp = results["users_conversations"][i].createdAt;
+                var date = new Date(timestamp);
+                var formattedDate = month[date.getMonth()] + " " + date.getDay() + ", " + date.getFullYear();
+                var conversationDateElem = $("<div class='conversation-date'>Conversation On " + formattedDate + "</div>");
+
+                //var url = "/chat-now/user/" + localStorage.getItem("userId") + "/conversation/" + conversationId;
+                var messageCount = "";
+                var conversationMessageCountElem = $("<div class='conversation-messages'>" + messageCount + "0 Messages</div>");
 
                 $("#conversation-item-holder").append(conversationItemElem);
                 conversationItemElem.append(conversationDateElem);
@@ -267,8 +276,9 @@
                     }
                     else
                     {
-                        // Launch waiting for another user screen
-                        console.log("Pending conversation.");
+                        // Launch waiting screen
+                        removeMiddleWidgets();
+                        showWaitingScreen();
                     }
                 });
             }
@@ -315,6 +325,10 @@
                     {
                         newMessage.css("float", "right");
                     }
+                    else
+                    {
+                        newMessage.css("background", "#30336b")
+                    }
                     messageCont.append(newMessage);
                 }
             }
@@ -355,6 +369,19 @@
             showHomeScreen();
         });
     }
+
+    function showWaitingScreen()
+    {
+        var row = $("<div class='row'></div>");
+        row.append($("<article id='trending-topics' class='col l3 m3 s12'></article>"));
+        row.append($("<article id='waiting-screen' class='col l9 m9 s12'></article>"));
+        $("#content").append(row);
+
+        addTrendingTopicsWidget();
+        $.get("/widgets/waiting.html", function(data){
+            $("#waiting-screen").html(data);
+        });
+    }
 	
 	function createChart()
 	{
@@ -362,86 +389,73 @@
 
         //Variable for chart creation and property definitions
         var chart = new CanvasJS.Chart("chartContainer", {
-            title:{
-                text: "Usage Statistics"
-            },
-
+            backgroundColor: "#f6f5ef",
             axisX:{
-                title: "Time",
-                valueFormatString: "MMMM D HH:mm:ss"  //use TT for AM/PM
-                //labelAngle: 0
+                title: "Day",
+                valueFormatString: "MMMM D",  //use TT for AM/PM
+                interval: 1,
+                intervalType: "day",
+                lineColor: "#30336b",
+                titleFontSize: 20,
+                titleFontColor: "#30336b"
             },
             axisY: {
-                title: "Active Users",
-                includeZero: false
+                title: "Conversations Started",
+                includeZero: true,
+                interval: 1,
+                lineColor: "#30336b",
+                titleFontSize: 20,
+                titleFontColor: "#30336b"
             },
             data: [{
                 type: "line",
                 xValueType: "dateTime",
-                //xValueFormatString: "MMMM:D:YYYY TT",
-                dataPoints: dps
+                dataPoints: dps,
+                color: "#30336b"
             }]
         });
 
 
         //Variables for updating the chart
-        var updateInterval = 2; //ticker for updating the graph (in seconds)
+        var updateInterval = 3600; //ticker for updating the graph (in seconds)
         var updateIntervalinMS = updateInterval * 1000; //ticker for updating the graph (in milli-seconds)
-
-        var dataLength = 5; //max number of data points visible on the graph at once
-
-        //var initialNumOfPoints = 2; //number of visible data points when you first load the page
-        //var numActiveUsers = 100;
+        var dataLength = 7; //max number of data points visible on the graph at once
 
         //Variable keeping track of time
         var time = new Date;
         time.getMonth();
         time.getDay();
-        time.getHours();
-        time.getMinutes();
-        time.getSeconds();
 
+        var updateChart = function() {
 
-        //Function that updates the chart
-        var updateChart = function(count) {
+            $.get("/get-usage-data", {}, function(results){
 
-            count = count || 1;
+                for(var i = 0; i < results["conversations"].length; i++) {
+                    var datetime = new Date(results["conversations"][i]._id.year,
+                        results["conversations"][i]._id.month,
+                        results["conversations"][i]._id.day);
 
-            //As time goes on, randomize the number of active users (numActiveUsers)
-            for (var i = 0; i < count; i++)
-            {
-                time.setTime(time.getTime() + updateIntervalinMS);
-                numActiveUsers = Math.ceil(getRandomNum(1, 100000));
+                    dps.push({
+                        x: datetime.getTime(),
+                        y: results["conversations"][i].count
+                    });
 
+                    /*
+                     Shifts data points from right to left
+                     If necessary, a data point disappears from the chart
+                     in order to ensure that only a certain number of data points
+                     are on the chart at any given time
+                     */
+                    if (dps.length > dataLength) {
+                        dps.shift();
+                    }
+                }
 
-                //New values are added to the end of the x & y arrays
-                dps.push({
-                    x: time.getTime(),
-                    y: numActiveUsers
-                });
-            }
+                chart.render();
 
-            /*
-            Shifts data points from right to left
-            If necessary, a data point disappears from the chart
-            in order to ensure that only a certain number of data points
-            are on the chart at any given time
-            */
-            if (dps.length > dataLength) {
-                dps.shift();
-            }
+            });
 
-            chart.render();
         };
-
-        /*
-            -calls the UpdateChart function
-
-            -If no parameter is given, chart is initialized with one data point
-            -Inserting a parameter will initialize the chart to have the number of data points
-            as specified by the parameter value
-        */
-        updateChart();
 
         setInterval
         (
@@ -449,15 +463,10 @@
             {
                 updateChart()
             },
-
             updateIntervalinMS
         );
 
-        //Function that generates a random number
-        function getRandomNum(min, max) {
-          return Math.random() * (max - min) + min;
-        }
-
-	}
+        updateChart();
+    }
 
 })();

@@ -1,5 +1,10 @@
+@primary-color: #686de0;
+@secondary-color: #30336b;
+@background: #f6f5ef;
+
 body
 {
+    background: @background;
 	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
 
 	.row
@@ -10,12 +15,14 @@ body
 	#main-bar
 	{
 		text-align: center;
-		border-bottom: 5px solid black;
+		border-bottom: 5px solid @primary-color;
+        background: white;
+        color: @primary-color;
 
 		#nav-app-name
 		{
 			color: white;
-			background: black;
+			background: @secondary-color;
 		}
 
 		#nav-chat, #nav-history, #nav-about-us, #nav-app-name
@@ -28,6 +35,8 @@ body
 		#nav-chat:hover, #nav-history:hover, #nav-about-us:hover
 		{
 			cursor: pointer;
+            background: @primary-color;
+            color: white;
 		}
 
 		#nav-chat
@@ -57,15 +66,17 @@ body
                 padding: 5px 15px;
                 text-align: center;
                 color: white;
-                background: black;
+                background: @secondary-color;
                 margin-left: -1px;
             }
 
             .trending-topic-item
             {
-                border: 1px solid black;
+                border: 1px solid @secondary-color;
                 padding: 5px 15px;
                 margin-left: -1px;
+                background: white;
+                color: @primary-color;
 
                 .title
                 {
@@ -78,17 +89,12 @@ body
                     text-indent: 25px;
                 }
             }
-
-            .trending-topic-item:hover
-            {
-                cursor: pointer;
-            }
         }
 
         #choose-your-topic
         {
             width: 100%;
-            margin: 50px 0;
+            margin: 50px 0 100px 0;
             display: block;
             vertical-align: top;
 
@@ -97,34 +103,48 @@ body
                 width: 100%;
                 font-size: 36px;
                 font-weight: bold;
-                color: black;
                 text-align: center;
-                margin: 100px 0;
+                margin: 75px 0 50px 0;
                 display: block;
+                color: @secondary-color;
             }
 
-            select
+            #topic-chooser-form
             {
-                width: 75%;
-                font-size: 20px;
-                font-weight: bold;
-                color: black;
-                text-align: center;
-                margin: auto;
                 display: block;
-            }
 
-            button
-            {
-                width: 40%;
-                height: 10%;
-                font-size: 20px;
-                font-weight: bold;
-                text-align: center;
-                margin: 50px auto;
-                display: block;
-                background-color: white;
-                color: black;
+                div.cont
+                {
+                    display: block;
+                    margin: auto;
+                    text-align: center;
+
+                    select
+                    {
+                        width: 350px;
+                        height: 40px;
+                        font-size: 20px;
+                        font-weight: bold;
+                        margin: auto;
+                        display: inline-block;
+                        border-radius: 20px;
+                        text-indent: 10px;
+                    }
+
+                    button
+                    {
+                        height: 40px;
+                        font-size: 20px;
+                        font-weight: bold;
+                        text-align: center;
+                        display: inline-block;
+                        padding: 0 25px;
+                        background: @secondary-color;
+                        border-radius: 20px;
+                        color: white;
+                    }
+                }
+
             }
         }
 
@@ -142,27 +162,34 @@ body
                 padding: 5px 15px;
                 text-align: center;
                 color: white;
-                background: black;
+                background: @secondary-color;
                 margin-left: -1px;
             }
 
             .conversation-item
             {
-                border: 1px solid black;
+                border: 1px solid @secondary-color;
                 padding: 5px 15px;
                 margin-left: -1px;
+                background: white;
+                color: @primary-color;
+
+                .conversation-date
+                {
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+
+                .conversation-messages
+                {
+                    font-size: 14px;
+                    text-indent: 25px;
+                }
             }
 
-            .conversation-date
+            .conversation-item:hover
             {
-                font-size: 14px;
-                font-weight: bold;
-            }
-
-            .conversation-messages
-            {
-                font-size: 14px;
-                text-indent: 25px;
+                cursor: pointer;
             }
         }
 
@@ -173,7 +200,6 @@ body
             box-sizing: border-box;
             padding: 0 50px;
 
-
             #previous-topics-header
             {
                 font-size: 20px;
@@ -181,27 +207,29 @@ body
                 padding: 5px 15px;
                 text-align: center;
                 color: white;
-                background: black;
+                background: @secondary-color;
                 margin-left: -1px;
             }
 
             .previous-topic-item
             {
-                border: 1px solid black;
+                border: 1px solid @secondary-color;
                 padding: 5px 15px;
                 margin-left: -1px;
-            }
+                background: white;
+                color: @primary-color;
 
-            .previous-topic-date
-            {
-                font-size: 14px;
-                font-weight: bold;
-            }
+                .previous-topic-date
+                {
+                    font-size: 14px;
+                    font-weight: bold;
+                }
 
-            .previous-topic
-            {
-                font-size: 14px;
-                text-indent: 25px;
+                .previous-topic
+                {
+                    font-size: 14px;
+                    text-indent: 25px;
+                }
             }
         }
 
@@ -210,6 +238,7 @@ body
             width: 1000px;
             vertical-align: top;
             display: inline-block;
+            color: @secondary-color;
 
             #mission-statement
             {
@@ -223,6 +252,7 @@ body
             {
                 font-size: 20px;
                 font-style: italic;
+                color: @primary-color;
             }
             #about-us
             {
@@ -237,6 +267,7 @@ body
                 display: block;
                 font-size: 20px;
                 font-style: normal;
+                color: @primary-color;
             }
             #additional-info
             {
@@ -251,6 +282,11 @@ body
                 display: block;
                 font-size: 14px;
                 font-style: normal;
+                color: @primary-color;
+            }
+            footer
+            {
+                color: @primary-color;
             }
         }
 
@@ -259,11 +295,23 @@ body
             width: 100%;
             display: block;
 
+            #chart-title
+            {
+                text-align: center;
+                display: block;
+                width: 100%;
+                font-size: 28px;
+                font-weight: bold;
+                color: @secondary-color;
+                margin-bottom: 25px;
+            }
+
             #chartContainer
             {
-                height: 370px;
-                max-width: 920px;
-                margin: 0 auto;
+                height: 225px;
+                width: 725px;
+                margin: auto;
+                display: block;
             }
         }
 
@@ -281,7 +329,7 @@ body
                 font-size: 26px;
                 font-weight: bold;
                 text-align: center;
-                background: black;
+                background: @secondary-color;
                 color: white;
                 height: 45px;
                 line-height: 45px;
@@ -341,7 +389,7 @@ body
                     padding: 10px 15px;
                     margin: 5px 0;
                     border-radius: 25px;
-                    background: black;
+                    background: @primary-color;
                     clear: both;
                     font-weight: bold;
                     color: white;
@@ -353,7 +401,7 @@ body
             {
                 display: block;
                 height: 45px;
-                background: black;
+                background: @secondary-color;
                 position: absolute;
                 bottom: 0;
                 width: ~"calc(100% - 100px)";
@@ -386,16 +434,57 @@ body
                         text-align: center;
                         height: 35px;
                         margin: 5px 25px 5px 0;
-                        background: white;
+                        background: @primary-color;
                         border-radius: 25px;
                         font-weight: bold;
                         width: ~"calc(100% - 25px)";
                         line-height: 35px;
+                        color: white;
                     }
                     #send-button:hover
                     {
                         cursor: pointer;
                     }
+                }
+            }
+        }
+
+        #waiting-screen
+        {
+            #waiting-cont
+            {
+                height: 75%;
+                width: 100%;
+
+                #waiting-image-cont
+                {
+                    background: @secondary-color;
+                    height: 250px;
+                    width: 250px;
+                    border-radius: 125px;
+                    display: block;
+                    position: relative;
+                    margin: 50px auto;
+
+                    img
+                    {
+                        height: 200px;
+                        width: 200px;
+                        position: absolute;
+                        top: 25px;
+                        left: 25px;
+                    }
+                }
+
+                #waiting-text
+                {
+                    color: @primary-color;
+                    font-size: 28px;
+                    text-align: center;
+                    display: block;
+                    font-weight: bold;
+                    width: 500px;
+                    margin: auto;
                 }
             }
         }

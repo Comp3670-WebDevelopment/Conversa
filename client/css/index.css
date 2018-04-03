@@ -1,4 +1,5 @@
 body {
+  background: #f6f5ef;
   font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
 }
 body .row {
@@ -6,11 +7,13 @@ body .row {
 }
 body #main-bar {
   text-align: center;
-  border-bottom: 5px solid black;
+  border-bottom: 5px solid #686de0;
+  background: white;
+  color: #686de0;
 }
 body #main-bar #nav-app-name {
   color: white;
-  background: black;
+  background: #30336b;
 }
 body #main-bar #nav-chat,
 body #main-bar #nav-history,
@@ -24,6 +27,8 @@ body #main-bar #nav-chat:hover,
 body #main-bar #nav-history:hover,
 body #main-bar #nav-about-us:hover {
   cursor: pointer;
+  background: #686de0;
+  color: white;
 }
 body #main-bar #nav-chat {
   text-decoration: underline;
@@ -43,13 +48,15 @@ body #content #trending-topics #trending-topics-header {
   padding: 5px 15px;
   text-align: center;
   color: white;
-  background: black;
+  background: #30336b;
   margin-left: -1px;
 }
 body #content #trending-topics .trending-topic-item {
-  border: 1px solid black;
+  border: 1px solid #30336b;
   padding: 5px 15px;
   margin-left: -1px;
+  background: white;
+  color: #686de0;
 }
 body #content #trending-topics .trending-topic-item .title {
   font-size: 18px;
@@ -59,12 +66,9 @@ body #content #trending-topics .trending-topic-item .conversations {
   font-size: 14px;
   text-indent: 25px;
 }
-body #content #trending-topics .trending-topic-item:hover {
-  cursor: pointer;
-}
 body #content #choose-your-topic {
   width: 100%;
-  margin: 50px 0;
+  margin: 50px 0 100px 0;
   display: block;
   vertical-align: top;
 }
@@ -72,30 +76,39 @@ body #content #choose-your-topic label {
   width: 100%;
   font-size: 36px;
   font-weight: bold;
-  color: black;
   text-align: center;
-  margin: 100px 0;
+  margin: 75px 0 50px 0;
+  display: block;
+  color: #30336b;
+}
+body #content #choose-your-topic #topic-chooser-form {
   display: block;
 }
-body #content #choose-your-topic select {
-  width: 75%;
-  font-size: 20px;
-  font-weight: bold;
-  color: black;
-  text-align: center;
+body #content #choose-your-topic #topic-chooser-form div.cont {
+  display: block;
   margin: auto;
-  display: block;
+  text-align: center;
 }
-body #content #choose-your-topic button {
-  width: 40%;
-  height: 10%;
+body #content #choose-your-topic #topic-chooser-form div.cont select {
+  width: 350px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  margin: auto;
+  display: inline-block;
+  border-radius: 20px;
+  text-indent: 10px;
+}
+body #content #choose-your-topic #topic-chooser-form div.cont button {
+  height: 40px;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  margin: 50px auto;
-  display: block;
-  background-color: white;
-  color: black;
+  display: inline-block;
+  padding: 0 25px;
+  background: #30336b;
+  border-radius: 20px;
+  color: white;
 }
 body #content #previous-conversations {
   margin: 50px 0;
@@ -109,21 +122,26 @@ body #content #previous-conversations #previous-conversations-header {
   padding: 5px 15px;
   text-align: center;
   color: white;
-  background: black;
+  background: #30336b;
   margin-left: -1px;
 }
 body #content #previous-conversations .conversation-item {
-  border: 1px solid black;
+  border: 1px solid #30336b;
   padding: 5px 15px;
   margin-left: -1px;
+  background: white;
+  color: #686de0;
 }
-body #content #previous-conversations .conversation-date {
+body #content #previous-conversations .conversation-item .conversation-date {
   font-size: 14px;
   font-weight: bold;
 }
-body #content #previous-conversations .conversation-messages {
+body #content #previous-conversations .conversation-item .conversation-messages {
   font-size: 14px;
   text-indent: 25px;
+}
+body #content #previous-conversations .conversation-item:hover {
+  cursor: pointer;
 }
 body #content #previous-topics {
   margin: 50px 0;
@@ -137,19 +155,21 @@ body #content #previous-topics #previous-topics-header {
   padding: 5px 15px;
   text-align: center;
   color: white;
-  background: black;
+  background: #30336b;
   margin-left: -1px;
 }
 body #content #previous-topics .previous-topic-item {
-  border: 1px solid black;
+  border: 1px solid #30336b;
   padding: 5px 15px;
   margin-left: -1px;
+  background: white;
+  color: #686de0;
 }
-body #content #previous-topics .previous-topic-date {
+body #content #previous-topics .previous-topic-item .previous-topic-date {
   font-size: 14px;
   font-weight: bold;
 }
-body #content #previous-topics .previous-topic {
+body #content #previous-topics .previous-topic-item .previous-topic {
   font-size: 14px;
   text-indent: 25px;
 }
@@ -157,6 +177,7 @@ body #content #about-us {
   width: 1000px;
   vertical-align: top;
   display: inline-block;
+  color: #30336b;
 }
 body #content #about-us #mission-statement {
   vertical-align: top;
@@ -168,6 +189,7 @@ body #content #about-us #mission-statement {
 body #content #about-us #statement {
   font-size: 20px;
   font-style: italic;
+  color: #686de0;
 }
 body #content #about-us #about-us {
   vertical-align: top;
@@ -180,6 +202,7 @@ body #content #about-us #text {
   display: block;
   font-size: 20px;
   font-style: normal;
+  color: #686de0;
 }
 body #content #about-us #additional-info {
   vertical-align: top;
@@ -192,15 +215,29 @@ body #content #about-us #info {
   display: block;
   font-size: 14px;
   font-style: normal;
+  color: #686de0;
+}
+body #content #about-us footer {
+  color: #686de0;
 }
 body #content #usage-stats {
   width: 100%;
   display: block;
 }
+body #content #usage-stats #chart-title {
+  text-align: center;
+  display: block;
+  width: 100%;
+  font-size: 28px;
+  font-weight: bold;
+  color: #30336b;
+  margin-bottom: 25px;
+}
 body #content #usage-stats #chartContainer {
-  height: 370px;
-  max-width: 920px;
-  margin: 0 auto;
+  height: 225px;
+  width: 725px;
+  margin: auto;
+  display: block;
 }
 body #content #conversation-screen {
   height: 75%;
@@ -214,7 +251,7 @@ body #content #conversation-screen #conversation-title {
   font-size: 26px;
   font-weight: bold;
   text-align: center;
-  background: black;
+  background: #30336b;
   color: white;
   height: 45px;
   line-height: 45px;
@@ -263,7 +300,7 @@ body #content #conversation-screen #message-cont .message {
   padding: 10px 15px;
   margin: 5px 0;
   border-radius: 25px;
-  background: black;
+  background: #686de0;
   clear: both;
   font-weight: bold;
   color: white;
@@ -272,7 +309,7 @@ body #content #conversation-screen #message-cont .message {
 body #content #conversation-screen #action-cont {
   display: block;
   height: 45px;
-  background: black;
+  background: #30336b;
   position: absolute;
   bottom: 0;
   width: calc(100% - 100px);
@@ -299,12 +336,42 @@ body #content #conversation-screen #action-cont #send-cont #send-button {
   text-align: center;
   height: 35px;
   margin: 5px 25px 5px 0;
-  background: white;
+  background: #686de0;
   border-radius: 25px;
   font-weight: bold;
   width: calc(100% - 25px);
   line-height: 35px;
+  color: white;
 }
 body #content #conversation-screen #action-cont #send-cont #send-button:hover {
   cursor: pointer;
+}
+body #content #waiting-screen #waiting-cont {
+  height: 75%;
+  width: 100%;
+}
+body #content #waiting-screen #waiting-cont #waiting-image-cont {
+  background: #30336b;
+  height: 250px;
+  width: 250px;
+  border-radius: 125px;
+  display: block;
+  position: relative;
+  margin: 50px auto;
+}
+body #content #waiting-screen #waiting-cont #waiting-image-cont img {
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+}
+body #content #waiting-screen #waiting-cont #waiting-text {
+  color: #686de0;
+  font-size: 28px;
+  text-align: center;
+  display: block;
+  font-weight: bold;
+  width: 500px;
+  margin: auto;
 }

@@ -125,6 +125,7 @@ module.exports = function(app)
         })
     });
 
+    // Get conversation
     app.get('/chat-now/conversation/:conversationId', function(req, res){
         var conversationId = req.params.conversationId;
 
@@ -165,6 +166,21 @@ module.exports = function(app)
 
         res.json({"result": "Finished removing conversation and messages."})
 
+    });
+
+    app.get('/get-usage-data', function(req, res){
+        Conversation.aggregate([
+            {$group: {
+                    _id: {month: {$month: "$createdAt"}, day: {$dayOfMonth: "$createdAt"}, year: {$year: "$createdAt"}},
+                    count: { $sum: 1 }
+                }
+            },
+            {$sort: {'createdAt': -1}},
+            {$limit: 7}
+        ], function (err, conversations) {
+            if (err) throw err;
+            res.json({"conversations": conversations})
+        });
     });
 
     function createUser(res)

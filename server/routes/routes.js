@@ -101,7 +101,7 @@ module.exports = function(app)
 
         Conversation.find({
             userIds: userId
-        }).populate('topic').sort({created_at: "descending"}).limit(5).exec(function(err, topics){
+        }).populate('topic').sort({createdAt: "descending"}).limit(5).exec(function(err, topics){
             res.json({"previous_topics" : topics});
         });
     });
@@ -175,7 +175,7 @@ module.exports = function(app)
                     count: { $sum: 1 }
                 }
             },
-            {$sort: {'createdAt': -1}},
+            {$sort: {_id: 1}},
             {$limit: 7}
         ], function (err, conversations) {
             if (err) throw err;

@@ -4,7 +4,6 @@
 
     $(document).ready(function(){
 
-        //localStorage.setItem("userId", "");
         checkUserId();
         setTabClickEvents();
         showHomeScreen();
@@ -159,21 +158,33 @@
 
             for(var i = 0; i < results["users_conversations"].length; i++)
             {
-                var conversationId = results["users_conversations"][i]._id;
-                var conversationItemElem = $("<div class='conversation-item' data-conversationid='" + conversationId + "'></div>");
+                (function(){
+                    var conversationId = results["users_conversations"][i]._id;
+                    var conversationItemElem = $("<div class='conversation-item' data-conversationid='" + conversationId + "'></div>");
 
-                var timestamp = results["users_conversations"][i].createdAt;
-                var date = new Date(timestamp);
-                var formattedDate = month[date.getMonth()] + " " + date.getDay() + ", " + date.getFullYear();
-                var conversationDateElem = $("<div class='conversation-date'>Conversation On " + formattedDate + "</div>");
+                    var timestamp = results["users_conversations"][i].createdAt;
+                    var date = new Date(timestamp);
+                    var formattedDate = month[date.getMonth()] + " " + (date.getDay() + 1) + ", " + date.getFullYear();
+                    var conversationDateElem = $("<div class='conversation-date'>Conversation On " + formattedDate + "</div>");
 
-                //var url = "/chat-now/user/" + localStorage.getItem("userId") + "/conversation/" + conversationId;
-                var messageCount = "";
-                var conversationMessageCountElem = $("<div class='conversation-messages'>" + messageCount + "0 Messages</div>");
+                    var url = "/chat-now/user/" + localStorage.getItem("userId") + "/conversation/" + conversationId;
 
-                $("#conversation-item-holder").append(conversationItemElem);
-                conversationItemElem.append(conversationDateElem);
-                conversationItemElem.append(conversationMessageCountElem);
+                    var messageCount;
+                    var conversationMessageCountElem;
+
+                    $.get(url, {}, function(results){
+
+                        messageCount = results["messages"].length;
+
+                        conversationMessageCountElem = $("<div class='conversation-messages'>" + messageCount + " Messages</div>");
+
+                        conversationItemElem.append(conversationDateElem);
+                        conversationItemElem.append(conversationMessageCountElem);
+                    });
+
+                    $("#conversation-item-holder").append(conversationItemElem);
+                })();
+
             }
 
             addPreviousConversationWidgetEvents();
@@ -199,10 +210,12 @@
             for(var i = 0; i < results["previous_topics"].length; i++)
             {
                 var topic = results["previous_topics"][i].topic.name;
+                var timestamp = results["previous_topics"][i].createdAt;
+                var date = new Date(timestamp);
+                var formattedDate = month[date.getMonth()] + " " + (date.getDay() + 1) + ", " + date.getFullYear();
 
-                // Create topic items and append here
                 var topicItemElem = $("<div class='previous-topic-item'></div>");
-                var topicConversationDateElem = $("<div class='previous-topic-date'>Started Conversation on 1/1/18</div>");
+                var topicConversationDateElem = $("<div class='previous-topic-date'>Started Conversation on " + formattedDate + "</div>");
                 var topicNameElem = $("<div class='previous-topic'>" + topic + "</div>");
 
                 $("#topic-item-holder").append(topicItemElem);
@@ -270,13 +283,11 @@
                     // Looks at userIds field to determine if it is a conversation or pending conversation
                     if(userIds)
                     {
-                        // Launch conversation screen
                         removeMiddleWidgets();
                         showConversationScreen(result["created_document"]._id);
                     }
                     else
                     {
-                        // Launch waiting screen
                         removeMiddleWidgets();
                         showWaitingScreen();
                     }
